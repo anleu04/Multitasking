@@ -19,7 +19,6 @@
     grid-template-columns: 2fr 1fr 1fr 1fr;
     gap: 10px;
     padding: 20px;
-    background-color: white;
 }
 
 .nombre, .asig, .fecha, .prog {
