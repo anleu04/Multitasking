@@ -1,0 +1,43 @@
+.login {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+    margin: 15rem auto;
+}
+.titulo {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+}
+input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 10px 0;
+}
+.beta {
+    background: #4CAF50; /* Green */
+}
+.iniciar {
+    background: #2196F3; /* Blue */
+}
+.crear {
+    background: #FF5722; /* Orange */
+}
+button:hover {
+    opacity: 0.9;
+}
