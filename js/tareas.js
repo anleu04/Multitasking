@@ -63,23 +63,23 @@ let asigPersona = document.querySelector(".asigpersona");
 let asigFecha = document.querySelector(".asigfecha");
 let asigProg = document.querySelector(".asigprog");
 
-// Función para obtener las asignaciones desde localStorage
+
 function obtenerAsignaciones() {
     let datos = localStorage.getItem("asignaciones");
     return datos ? JSON.parse(datos) : [];
 }
 
-// Función para guardar las asignaciones en localStorage
+
 function guardarAsignaciones(asignaciones) {
     localStorage.setItem("asignaciones", JSON.stringify(asignaciones));
 }
 
-// Función para cargar las asignaciones al iniciar la página
+
 function cargarAsignaciones() {
     let asignaciones = obtenerAsignaciones();
 
     asignaciones.forEach((asignacion, index) => {
-        // Crear elementos para la tarea
+       
         let tareaDiv = document.createElement("div");
         tareaDiv.classList.add("tareahecha");
         tareaDiv.innerHTML = `
@@ -101,11 +101,11 @@ function cargarAsignaciones() {
         let progDiv = document.createElement("div");
         progDiv.classList.add("estadolisto");
         progDiv.textContent = asignacion.estateTexto;
-        progDiv.style.color = asignacion.estateColor; // Aplicar el color seleccionado
+        progDiv.style.color = asignacion.estateColor; 
         asigProg.appendChild(progDiv);
     });
 
-    // Añadir el evento de eliminar a cada botón
+    
     document.querySelectorAll(".eliminar").forEach(boton => {
         boton.addEventListener("click", function() {
             let index = this.getAttribute("data-index");
@@ -114,7 +114,7 @@ function cargarAsignaciones() {
     });
 }
 
-// Agregamos el evento click al botón "Guardar"
+
 btnGuardar.addEventListener("click", function() {
     let nombreTarea = inputNombre.value;
     let asignado = inputAsignado.value;
@@ -122,7 +122,7 @@ btnGuardar.addEventListener("click", function() {
     let estado = selectEstado.options[selectEstado.selectedIndex];
     let estadoTexto = estado.text;
 
-    // Crear nuevo objeto de tarea
+   
     let nuevaAsignacion = {
         nombre: nombreTarea,
         persona: asignado,
@@ -130,16 +130,16 @@ btnGuardar.addEventListener("click", function() {
         estateTexto: estadoTexto,
     };
 
-    // Obtener tareas existentes
+    
     let asignaciones = obtenerAsignaciones();
 
-    // Agregar nueva tarea
+   
     asignaciones.push(nuevaAsignacion);
 
-    // Guardar las tareas actualizadas
+   
     guardarAsignaciones(asignaciones);
 
-    // Crear nuevos divs para cada tarea
+    
     let tareaDiv = document.createElement("div");
     tareaDiv.classList.add("tareahecha");
     tareaDiv.innerHTML = `
@@ -163,42 +163,42 @@ btnGuardar.addEventListener("click", function() {
     progDiv.textContent = estadoTexto;
     asigProg.appendChild(progDiv);
 
-    // Añadir el evento de eliminar al nuevo botón
+    
     tareaDiv.querySelector(".eliminar").addEventListener("click", function() {
         let index = this.getAttribute("data-index");
         eliminarAsignacion(index);
     });
 
-    // Cerramos el modal después de guardar los datos
+    
     modal.style.display = "none";
 
-    // Limpiamos los inputs del modal
+   
     inputNombre.value = "";
     inputAsignado.value = "";
     inputFecha.value = "";
-    selectEstado.selectedIndex = 0; // Resetea el select al valor por defecto
+    selectEstado.selectedIndex = 0; 
 });
 
-// Función para eliminar una tarea
+
 function eliminarAsignacion(index) {
     let asignaciones = obtenerAsignaciones();
     asignaciones.splice(index, 1);
     guardarAsignaciones(asignaciones);
-    // Actualizar la vista sin recargar la página
+    
     actualizarVista();
 }
 
-// Función para actualizar la vista
+
 function actualizarVista() {
-    // Limpiar los divs actuales
+   
     asigTareas.innerHTML = '';
     asigPersona.innerHTML = '';
     asigFecha.innerHTML = '';
     asigProg.innerHTML = '';
 
-    // Volver a cargar las asignaciones
+   
     cargarAsignaciones();
 }
 
-// Cargar las asignaciones al iniciar la página
+
 cargarAsignaciones();
