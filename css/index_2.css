@@ -1,8 +1,11 @@
 .header {
     background-color: rgb(53, 55, 58);
     color: white;
-    padding: 10px;
-    text-align: center;
+    height: 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 1rem;
 }
 
 .agregar {
@@ -10,8 +13,9 @@
     border: none;
     color: black;
     font-size: 20px;
-    padding: 10px 20px;
     cursor: pointer;
+    height: 3rem;
+    width: 3rem;
 }
 
 .cuerpo {
@@ -91,4 +95,21 @@
     cursor: pointer;
     border-radius: 4px;
     font-size: 16px;
+}
+.footer{
+    height: 10rem;
+    display: flex;
+    position: fixed;
+    top: 550px;
+    left: 0;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(128, 128, 128, 0.651);
+    gap: 3rem;
+
+}
+.footer img{
+    width: 5rem;
+    height: 5rem;
 }

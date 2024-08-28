@@ -2,6 +2,7 @@ let tareas = document.querySelector(".tareas");
 
 tareas.innerHTML = `
     <header class="header">
+        <input type="text" class="buscar" placeholder="Buscar">
         <button class="agregar">+</button>
     </header>
     <main class="cuerpo">
@@ -14,12 +15,17 @@ tareas.innerHTML = `
         <div class="asigfecha"></div>
         <div class="asigprog"></div>
     </main>
+    <footer class="footer">
+        <img src="../IMG/logo.png" alt="">
+        <h1>Santa Catalina Laboure</h1>
+        <h2>jbanleu@scl.edu.gt</h2>
+    </footer>
 
     <div class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
             <h2>Agregar Tarea</h2>
-            <input type="text" placeholder="Nombre de la tarea">
+            <input type="text" class="buscar" placeholder="Nombre de la tarea">
             <input type="text" placeholder="Asignado a">
             <input type="date" placeholder="Fecha entrega">
             <select class="estate">
@@ -33,7 +39,7 @@ tareas.innerHTML = `
             <button class="guardar">Guardar</button>
         </div>
     </div>
-    `;
+`;
 
 let modal = document.querySelector(".modal");
 let btn = document.querySelector(".agregar");
@@ -63,23 +69,19 @@ let asigPersona = document.querySelector(".asigpersona");
 let asigFecha = document.querySelector(".asigfecha");
 let asigProg = document.querySelector(".asigprog");
 
-
 function obtenerAsignaciones() {
     let datos = localStorage.getItem("asignaciones");
     return datos ? JSON.parse(datos) : [];
 }
 
-
 function guardarAsignaciones(asignaciones) {
     localStorage.setItem("asignaciones", JSON.stringify(asignaciones));
 }
-
 
 function cargarAsignaciones() {
     let asignaciones = obtenerAsignaciones();
 
     asignaciones.forEach((asignacion, index) => {
-       
         let tareaDiv = document.createElement("div");
         tareaDiv.classList.add("tareahecha");
         tareaDiv.innerHTML = `
@@ -101,11 +103,10 @@ function cargarAsignaciones() {
         let progDiv = document.createElement("div");
         progDiv.classList.add("estadolisto");
         progDiv.textContent = asignacion.estateTexto;
-        progDiv.style.color = asignacion.estateColor; 
+        progDiv.style.color = asignacion.estateColor;
         asigProg.appendChild(progDiv);
     });
 
-    
     document.querySelectorAll(".eliminar").forEach(boton => {
         boton.addEventListener("click", function() {
             let index = this.getAttribute("data-index");
@@ -114,7 +115,6 @@ function cargarAsignaciones() {
     });
 }
 
-
 btnGuardar.addEventListener("click", function() {
     let nombreTarea = inputNombre.value;
     let asignado = inputAsignado.value;
@@ -122,7 +122,6 @@ btnGuardar.addEventListener("click", function() {
     let estado = selectEstado.options[selectEstado.selectedIndex];
     let estadoTexto = estado.text;
 
-   
     let nuevaAsignacion = {
         nombre: nombreTarea,
         persona: asignado,
@@ -130,16 +129,10 @@ btnGuardar.addEventListener("click", function() {
         estateTexto: estadoTexto,
     };
 
-    
     let asignaciones = obtenerAsignaciones();
-
-   
     asignaciones.push(nuevaAsignacion);
-
-   
     guardarAsignaciones(asignaciones);
 
-    
     let tareaDiv = document.createElement("div");
     tareaDiv.classList.add("tareahecha");
     tareaDiv.innerHTML = `
@@ -163,42 +156,64 @@ btnGuardar.addEventListener("click", function() {
     progDiv.textContent = estadoTexto;
     asigProg.appendChild(progDiv);
 
-    
     tareaDiv.querySelector(".eliminar").addEventListener("click", function() {
         let index = this.getAttribute("data-index");
         eliminarAsignacion(index);
     });
 
-    
     modal.style.display = "none";
-
-   
     inputNombre.value = "";
     inputAsignado.value = "";
     inputFecha.value = "";
-    selectEstado.selectedIndex = 0; 
+    selectEstado.selectedIndex = 0;
 });
-
 
 function eliminarAsignacion(index) {
     let asignaciones = obtenerAsignaciones();
     asignaciones.splice(index, 1);
     guardarAsignaciones(asignaciones);
-    
     actualizarVista();
 }
 
-
 function actualizarVista() {
-   
     asigTareas.innerHTML = '';
     asigPersona.innerHTML = '';
     asigFecha.innerHTML = '';
     asigProg.innerHTML = '';
-
-   
     cargarAsignaciones();
 }
 
-
 cargarAsignaciones();
+
+document.querySelector('.buscar').addEventListener('input', function() {
+    const filtro = this.value.toLowerCase();
+    const tareas = document.querySelectorAll('.tareahecha');
+    const personas = document.querySelectorAll('.usuarioasignado');
+    const fechas = document.querySelectorAll('.fechalista');
+    const progresos = document.querySelectorAll('.estadolisto');
+
+    let matchFound = false;
+
+    tareas.forEach((tarea, index) => {
+        const nombreTarea = tarea.querySelector('.work').textContent.toLowerCase();
+        if (nombreTarea.includes(filtro)) {
+            tarea.style.display = '';
+            personas[index].style.display = '';
+            fechas[index].style.display = '';
+            progresos[index].style.display = '';
+            matchFound = true;
+        } else {
+            tarea.style.display = 'none';
+            personas[index].style.display = 'none';
+            fechas[index].style.display = 'none';
+            progresos[index].style.display = 'none';
+        }
+    });
+
+    if (!matchFound) {
+        tareas.forEach(tarea => tarea.style.display = 'none');
+        personas.forEach(persona => persona.style.display = 'none');
+        fechas.forEach(fecha => fecha.style.display = 'none');
+        progresos.forEach(progreso => progreso.style.display = 'none');
+    }
+});

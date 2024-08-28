@@ -40,3 +40,36 @@ button {
 button:hover {
     opacity: 0.9;
 }
+.bnv{
+    display: flex;
+    position: fixed;
+    top: 0;
+    width: 100% ;
+    left: 0;
+    height: 5rem;
+    justify-content: center;
+    align-items: center;
+    font-size: 3rem;
+}
+.buscar{
+
+    display: flex;
+    width: 10rem;
+    height: 3rem;
+}
+.footer{
+    height: 10rem;
+    display: flex;
+    position: fixed;
+    top: 550px;
+    left: 0;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+
+}
+.footer img{
+    width: 5rem;
+    height: 5rem;
+}

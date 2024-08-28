@@ -29,7 +29,7 @@ let nombres = [
     },
     {
         correo: "Messi",
-        contra: "!#$%&/()=",
+        contra: "!#$%&/()   =",
     },
     
 ]
